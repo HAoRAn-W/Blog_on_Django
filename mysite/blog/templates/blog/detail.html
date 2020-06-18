@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+</head>
+<body>
+<h1>{{ Blog.title }}</h1>
+<ul>
+{% for article in question.choice_set.all %}
+    <li>{{ Article.title }}</li>
+{% endfor %}
+</ul>
+</body>
+</html>

@@ -18,7 +18,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Article(models.Model):
+class Blog(models.Model):
     title = models.CharField('title', max_length=32)  # 标题
     author = models.CharField('author', max_length=16)  # 标题
     content = models.CharField('content', max_length=2048)  # 正文
@@ -31,7 +31,7 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    blog = models.ForeignKey(Article, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     visitor_name = models.CharField('visitor_name', max_length=16)
     email = models.EmailField('email')
     comments = models.CharField('comments', max_length=480)
