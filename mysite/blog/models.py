@@ -1,10 +1,9 @@
 from django.db import models
 
 
-# Create your models here.
 class Category(models.Model):
     # blog category
-    name = models.CharField('name', max_length=30)
+    name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name
@@ -12,19 +11,19 @@ class Category(models.Model):
 
 class Tag(models.Model):
     # blog tag
-    name = models.CharField('name', max_length=16)
+    name = models.CharField(max_length=16)
 
     def __str__(self):
         return self.name
 
 
 class Blog(models.Model):
-    title = models.CharField('title', max_length=32)  # 标题
-    author = models.CharField('author', max_length=16)  # 标题
-    content = models.CharField('content', max_length=2048)  # 正文
-    publish_time = models.DateTimeField('publish_time', auto_now_add=True)  # 发布时间
-    category = models.CharField(Category, max_length=30)  # 分类
-    tags = models.ManyToManyField(Tag)  # 标签
+    title = models.CharField(max_length=32)  # 标题
+    author = models.CharField(max_length=16)  # 作者
+    content = models.TextField()  # 正文
+    publish_time = models.DateTimeField(auto_now_add=True)  # 发布时间
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)  # 分类
+    tags = models.ManyToManyField(Tag, blank=True)  # 标签
 
     def __str__(self):
         return self.title
@@ -32,10 +31,10 @@ class Blog(models.Model):
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    visitor_name = models.CharField('visitor_name', max_length=16)
-    email = models.EmailField('email')
-    comments = models.CharField('comments', max_length=480)
-    publish_time = models.DateTimeField('publish_time', auto_now_add=True)
+    visitor_name = models.CharField(max_length=16)
+    email = models.EmailField()
+    comments = models.CharField(max_length=480)
+    publish_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.comments
