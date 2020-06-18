@@ -25,3 +25,4 @@ def detail(request, blog_id):
             Comment.objects.creat(**cleaned_data)
 
     return render(request, 'blog/detail.html', {'blog': blog, 'comments': blog.comment_set.all().order_by('-created')})
+
