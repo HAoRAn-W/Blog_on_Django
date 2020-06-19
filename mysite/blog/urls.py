@@ -1,9 +1,7 @@
-from django.urls import path
+from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<str:artcle_title>', views.detail, name='detail'),
-
-
-]
+    re_path(r'^$', views.index, name='index'),
+    re_path(r'^blog/(?P<pk>[0-9]+)$', views.detail, name='detail'),
+    ]

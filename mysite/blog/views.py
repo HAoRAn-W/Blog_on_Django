@@ -8,16 +8,7 @@ def index(request):
     return render(request, 'blog/index.html', {'latest_blog_list': latest_blog_list})
 
 
-def detail(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
-    if request.method == 'GET':
-        form = CommentForm()
-    else:
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            cleaned_data = form.cleaned_data
-            cleaned_data['blog'] = blog
-            Comment.objects.creat(**cleaned_data)
-
-    return render(request, 'blog/detail.html', {'blog': blog, 'comments': blog.comment_set.all().order_by('-created')})
+def detail(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    return render(request, 'blog/detail.html', {'blog': blog})
 
