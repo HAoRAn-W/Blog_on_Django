@@ -1,7 +1,8 @@
-from django.urls import re_path
+from django.urls import path, re_path
 from . import views
 
+app_name = 'blog'
 urlpatterns = [
-    re_path(r'^$', views.index, name='index'),
-    re_path(r'^blog/(?P<pk>[0-9]+)$', views.detail, name='detail'),
-    ]
+    path('', views.index, name='index'),
+    path('<int:pk>/detail', views.detail, name='detail'),
+]
