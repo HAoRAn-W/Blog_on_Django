@@ -16,3 +16,15 @@ def detail(request, pk):
                                                                'markdown.extensions.toc'])
     return render(request, 'blog/detail.html', {'blog': blog})
 
+
+def archives(request, year, month):
+    blog_list = Blog.objects.filter(
+                                    publish_time__month=month
+                                    ).order_by('-publish_time')
+    return render(request, 'blog/index.html', {'blog_list': blog_list})
+
+
+def category(request, pk):
+    cate = get_object_or_404(Category, pk=pk)
+    blog_list = Blog.objects.filter(category=cate).order_by('-publish_time')
+    return render(request, 'blog/index.html', {'blog_list': blog_list})

@@ -22,7 +22,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=32)  # 标题
     author = models.CharField(max_length=16)  # 作者
     content = models.TextField()  # 正文
-    publish_time = models.DateTimeField(auto_now_add=True)  # 发布时间
+    publish_time = models.DateTimeField()  # 发布时间
     category = models.ForeignKey(Category, on_delete=models.CASCADE)  # 分类
     tags = models.ManyToManyField(Tag, blank=True)  # 标签
     abstract = models.CharField(max_length=200, blank=True)  # 摘要

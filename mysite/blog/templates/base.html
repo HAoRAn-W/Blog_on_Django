@@ -62,7 +62,7 @@
     </header>
 </div>
 <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
-<div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
+<div class="copyrights">Modified by <a href="#">Ryan的博客</a></div>
 
 <div class="content-body">
     <div class="container">
@@ -93,21 +93,18 @@
                     <ul>
                         {% for date in date_list %}
                         <li>
-                            <a href="#">{{date.year}}年{{date.month}}月</a>
+                            <a href="{% url 'blog:archives' date.year date.month %}">{{date.year}}年{{date.month}}月</a>
                         </li>
-                        {% empty %}
-                        暂无新文章
                         {% endfor %}
                     </ul>
                 </div>
-
                 <div class="widget widget-category">
-                    <h3 class="widget-title">标签</h3>
+                    <h3 class="widget-title">分类</h3>
                     {% get_category as category_list %}
                     <ul>
                         {% for category in category_list %}
                         <li>
-                            <a href="#">{{category.name}}<span class="post-count">(13)</span></a>
+                            <a href="{% url 'blog:category' category.pk %}]">{{category.name}}<span class="post-count">(13)</span></a>
                         </li>
                         {% empty %}
                         暂无分类
