@@ -32,14 +32,3 @@ class Blog(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})
-
-
-class Comment(models.Model):
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    visitor_name = models.CharField(max_length=16)
-    email = models.EmailField()
-    comments = models.CharField(max_length=480)
-    publish_time = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.comments
