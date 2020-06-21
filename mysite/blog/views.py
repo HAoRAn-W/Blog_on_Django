@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .comment import *
+from mysite.comments.forms import CommentForm
 from .models import *
 import markdown
 
@@ -14,7 +14,12 @@ def detail(request, pk):
     blog.content = markdown.markdown(blog.content, extensions=['markdown.extensions.extra',
                                                                'markdown.extensions.codehilite',
                                                                'markdown.extensions.toc'])
-    return render(request, 'blog/detail.html', {'blog': blog})
+    form = CommentForm()
+    comment_list = blog.comment_set.all()
+    context = {'blog': blog,
+               'form': form,
+               'comment_list': comment_list}
+    return render(request, 'blog/detail.html', context)
 
 
 def archives(request, year, month):

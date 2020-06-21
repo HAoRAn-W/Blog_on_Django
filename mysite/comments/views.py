@@ -17,4 +17,9 @@ def blog_comment(request, blog_pk):
             comment.save()
             return redirect(blog)
         else:
-            comment_list = blog.comment_set
+            comment_list = blog.comment_set.all()
+            context = {'blog': blog,
+                       'form': form,
+                       'comment_list': comment_list
+                       }
+            return render(request, 'blog/detail.html', context)
