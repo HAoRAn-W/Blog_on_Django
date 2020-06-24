@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-{% load blog_tags %}
+{% load blog_extras %}
 <head>
     <title>Welcome to my blog</title>
 
@@ -74,79 +74,10 @@
             <aside class="col-md-4">
                 {% block toc %}
                 {% endblock toc %}
-                <div class="widget widget-recent-posts">
-                    <h3 class="widget-title">最新文章</h3>
-                    {% get_recent_blog as recent_blog_list %}
-                    <ul>
-                        {% for blog in recent_blog_list %}
-                        <li>
-                            <a href="{{blog.get_absolute_url}}">{{blog.title}}</a>
-                        </li>
-                        {% empty %}}
-                        暂无新文章
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="widget widget-archives">
-                    <h3 class="widget-title">发布时间</h3>
-                    {% archives as date_list %}
-                    <ul>
-                        {% for date in date_list %}
-                        <li>
-                            <a href="{% url 'blog:archives' date.year date.month %}">{{date.year}}年{{date.month}}月</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="widget widget-category">
-                    <h3 class="widget-title">分类</h3>
-                    {% get_category as category_list %}
-                    <ul>
-                        {% for category in category_list %}
-                        <li>
-                            <a href="{% url 'blog:category' category.pk %}]">{{category.name}}<span class="post-count">(13)</span></a>
-                        </li>
-                        {% empty %}
-                        暂无分类
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="widget widget-tag-cloud">
-                    <h3 class="widget-title">标签云</h3>
-                    <ul>
-                        <li>
-                            <a href="#">Django</a>
-                        </li>
-                        <li>
-                            <a href="#">Python</a>
-                        </li>
-                        <li>
-                            <a href="#">Java</a>
-                        </li>
-                        <li>
-                            <a href="#">笔记</a>
-                        </li>
-                        <li>
-                            <a href="#">文档</a>
-                        </li>
-                        <li>
-                            <a href="#">AngularJS</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">Snippet</a>
-                        </li>
-                        <li>
-                            <a href="#">jQuery</a>
-                        </li>
-                    </ul>
-                </div>
+                {% show_recent_posts %}
+                {% show_archives %}
+                {% show_categories %}
+                {% show_tags %}
                 <div class="rss">
                     <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>
@@ -181,6 +112,14 @@
 </div>
 
 <script src="{% static 'blog/js/script.js' %}"></script>
+<body>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlightjs-line-numbers.js/2.7.0/highlightjs-line-numbers.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+  </script>
+</body>
 
 </body>
 </html>

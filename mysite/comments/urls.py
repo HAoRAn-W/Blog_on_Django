@@ -3,6 +3,6 @@ from . import views
 
 app_name = 'comments'
 urlpatterns = [
-    path('comment/blog/<int:pk>/', views.blog_comment, name='blog_comment')
+    path('blog/comment/<int:pk>/', views.blog_comment, name='comment')
 
 ]
