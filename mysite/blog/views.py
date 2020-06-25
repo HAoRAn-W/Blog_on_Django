@@ -12,11 +12,12 @@ def index(request):
 
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    md = markdown.markdown(extensions=['markdown.extensions.extra',
+    md = markdown.Markdown(extensions=['markdown.extensions.extra',
                                        'markdown.extensions.codehilite',
                                        'markdown.extensions.toc'])
     post.content = md.convert(post.content)
     post.toc = md.toc
+
     form = CommentForm()
     comment_list = post.comment_set.all()
     context = {'post': post,

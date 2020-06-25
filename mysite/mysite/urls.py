@@ -20,5 +20,5 @@ from django.urls import include, path
 urlpatterns = [
     path('', include('blog.urls')),  # 把blog应用中的url包含进来，‘ ’内的内容加上blog中url的内容就是完整的url
     path('admin/', admin.site.urls),
-    path('blog/', include('comments.urls')),
+    path('', include('comments.urls')),
 ]

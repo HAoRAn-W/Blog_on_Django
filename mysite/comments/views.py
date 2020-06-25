@@ -6,7 +6,7 @@ from .forms import CommentForm
 
 
 @require_POST
-def blog_comment(request, post_pk):
+def comment(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
     # django 将用户提交的数据封装在 request.POST 中，这是一个类字典对象。
     # 我们利用这些数据构造了 CommentForm 的实例，这样就生成了一个绑定了用户提交数据的表单。
