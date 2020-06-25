@@ -9,7 +9,7 @@ class Comment(models.Model):
     url = models.URLField(blank=True)
     text = models.TextField()
     created_time = models.DateTimeField(default=timezone.now)
-    blog = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
 
     def __str__(self):
         return '{}: {}'.format(self.name, self.text[:20])
