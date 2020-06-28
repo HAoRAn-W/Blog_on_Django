@@ -6,13 +6,15 @@ import re
 from django.views.generic import ListView, DetailView
 from markdown.extensions.toc import TocExtension
 from django.utils.text import slugify
+from pure_pagination.mixins import PaginationMixin
 
 
-class IndexView(ListView):
+# TODO  标签的计数
+class IndexView(PaginationMixin, ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'post_list'
-    paginate_by = 10
+    paginate_by = 3
 
 
 class PostDetailView(DetailView):
