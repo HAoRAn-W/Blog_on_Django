@@ -34,7 +34,7 @@ class Post(models.Model):
     views = models.PositiveIntegerField(default=0, editable=False)  # 阅读量
 
     @property
-    def toc(self):
+    def get_toc(self):
         return self.rich_content.get("toc", "")
 
     @property

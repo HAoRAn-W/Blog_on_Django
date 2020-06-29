@@ -40,7 +40,7 @@ class PostDetailView(DetailView):
         # 覆写 get_object 对 post 的 content 值进行渲染
         post = super().get_object(queryset=None)
         post.content = post.body_html
-        post.toc = post.toc
+        post.toc = post.get_toc
 
         return post
 
