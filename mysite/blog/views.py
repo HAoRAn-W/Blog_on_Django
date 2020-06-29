@@ -1,12 +1,10 @@
-from django.shortcuts import get_object_or_404
-from comments.forms import CommentForm
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import *
-import markdown
-import re
 from django.views.generic import ListView, DetailView
-from markdown.extensions.toc import TocExtension
-from django.utils.text import slugify
 from pure_pagination.mixins import PaginationMixin
+from django.contrib import messages
+from django.db.models import Q
+
 
 
 # TODO  标签的计数
@@ -76,3 +74,16 @@ class TagView(ListView):
     def get_queryset(self):
         t = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
         return super(TagView, self).get_queryset().filter(tag=t)
+
+
+def search(request):
+    q = request.GET.get('q')
+
+    if not q:
+        error_msg = "请输入要搜索的内容"
+        messages.add_message(request, messages.ERROR, error_msg, extra_tags='danger')
+        return redirect('blog:index')
+
+    post_list = Post.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
+    return render(request, 'blog/index.html', {'post_list': post_list})
+
