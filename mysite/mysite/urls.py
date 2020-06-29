@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from blog.feeds import AllPostsRssFeed
 
 urlpatterns = [
     path('', include('blog.urls')),  # 把blog应用中的url包含进来，‘ ’内的内容加上blog中url的内容就是完整的url
     path('admin/', admin.site.urls),
     path('', include('comments.urls')),
+    path('all/rss/', AllPostsRssFeed(), name='rss'),
+
 ]

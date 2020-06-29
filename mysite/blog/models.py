@@ -1,6 +1,11 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+import markdown
+import re
+from markdown.extensions.toc import TocExtension
+from django.utils.text import slugify
+from django.utils.functional import cached_property
 
 
 class Category(models.Model):
@@ -26,7 +31,19 @@ class Post(models.Model):
     abstract = models.CharField(max_length=200, blank=True)  # 摘要
     category = models.ForeignKey(Category, on_delete=models.CASCADE)  # 分类
     tags = models.ManyToManyField(Tag, blank=True)  # 标签
-    views = models.PositiveIntegerField(default=0, editable=False)
+    views = models.PositiveIntegerField(default=0, editable=False)  # 阅读量
+
+    @property
+    def toc(self):
+        return self.rich_content.get("toc", "")
+
+    @property
+    def body_html(self):
+        return self.rich_content.get("content", "")
+
+    @cached_property
+    def rich_content(self):
+        return generate_rich_content(self.content)
 
     def __str__(self):
         return self.title
@@ -39,3 +56,15 @@ class Post(models.Model):
         self.save(update_fields=['views'])
 
 
+def generate_rich_content(value):
+    md = markdown.Markdown(
+        extensions=[
+            "markdown.extensions.extra",
+            "markdown.extensions.codehilite",
+            TocExtension(slugify=slugify),
+        ]
+    )
+    content = md.convert(value)
+    m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
+    toc = m.group(1) if m is not None else ""
+    return {"content": content, "toc": toc}

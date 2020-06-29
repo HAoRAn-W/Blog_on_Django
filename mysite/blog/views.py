@@ -37,17 +37,10 @@ class PostDetailView(DetailView):
         return response
 
     def get_object(self, queryset=None):
-        # 覆写 get_object 对 post 的 body 值进行渲染
+        # 覆写 get_object 对 post 的 content 值进行渲染
         post = super().get_object(queryset=None)
-        md = markdown.Markdown(extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
-            TocExtension(slugify=slugify),
-        ])
-        post.body = md.convert(post.content)
-
-        m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
-        post.toc = m.group(1) if m is not None else ''
+        post.content = post.body_html
+        post.toc = post.toc
 
         return post
 
